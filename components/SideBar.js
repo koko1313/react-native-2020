@@ -67,6 +67,13 @@ const menuItems = [
             size={16}
             color="#ffffff"/>,
     },
-
-
+    {
+        name: "Потребител",
+        route: "User",
+        icon: <Entypo
+            style={styles.icon}
+            name="user"
+            size={16}
+            color="#ffffff"/>,
+    },
 ];
