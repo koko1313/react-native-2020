@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {Text, TextInput, StyleSheet} from 'react-native';
 import Layout from '../layout/Layout';
 import { useSelector, useDispatch } from 'react-redux';
-import * as actions from "../redux/actions";
 import Colors from '../constants/Colors';
 import Button from '../components/Button';
 
