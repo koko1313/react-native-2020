@@ -4,7 +4,7 @@ import {AppLoading} from 'expo';
 import * as Font from 'expo-font';
 import {Asset} from 'expo-asset';
 import AppContainer from './navigation/AppContainer';
-import { combineReducers, createStore } from 'redux';
+import { combineReducers, createStore, applyMiddleware } from 'redux';
 import {Provider} from 'react-redux';
 
 const initialState = [
@@ -29,7 +29,8 @@ const rootReducer = combineReducers({
     cards: cardReducer,
 });
 
-const store = createStore(rootReducer);
+// когато dispatch-нем нещо, то минава първо през middleware-а и после продължава към reducer-а
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
 export default class App extends React.Component {
     state = {
