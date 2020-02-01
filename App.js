@@ -4,6 +4,32 @@ import {AppLoading} from 'expo';
 import * as Font from 'expo-font';
 import {Asset} from 'expo-asset';
 import AppContainer from './navigation/AppContainer';
+import { combineReducers, createStore } from 'redux';
+import {Provider} from 'react-redux';
+
+const initialState = [
+    {
+        title: "Card 1",
+        description: "Description ....",
+    },
+    {
+        title: "Card 2",
+        description: "Description 2 ....",
+    },
+];
+
+const cardReducer = function(state = initialState, action) {
+    switch(action.type) {
+        case "SET_CARDS": return [...action.payload];
+        default: state;
+    }
+}
+
+const rootReducer = combineReducers({
+    cards: cardReducer,
+});
+
+const store = createStore(rootReducer);
 
 export default class App extends React.Component {
     state = {
@@ -24,7 +50,9 @@ export default class App extends React.Component {
             return (
                 <View style={styles.container}>
                     {Platform.OS === 'ios' && <StatusBar barStyle="default"/>}
-                    <AppContainer/>
+                    <Provider store={store}>
+                        <AppContainer/>
+                    </Provider>
                 </View>
             );
         }
