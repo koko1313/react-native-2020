@@ -11,6 +11,7 @@ export default class App extends React.Component {
     };
 
     render() {
+        // ако не се е заредил проекта, показва loading
         if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
             return (
                 <AppLoading
