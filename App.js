@@ -21,7 +21,7 @@ const initialState = [
 const cardReducer = function(state = initialState, action) {
     switch(action.type) {
         case "SET_CARDS": return [...action.payload];
-        default: state;
+        default: return state;
     }
 }
 
@@ -30,7 +30,7 @@ const rootReducer = combineReducers({
 });
 
 // когато dispatch-нем нещо, то минава първо през middleware-а и после продължава към reducer-а
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = createStore(rootReducer, applyMiddleware(/*thunk*/));
 
 export default class App extends React.Component {
     state = {

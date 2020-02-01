@@ -5,38 +5,29 @@ import {
     Button,
     StyleSheet
 } from 'react-native';
+import {useSelector} from 'react-redux';
 
 import Layout from '../layout/Layout';
 import Card from '../components/Card';
+import { ScrollView } from 'react-native-gesture-handler';
 
-class HomeScreen extends React.Component {
+const HomeScreen = () => {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            cardItems: [
-                {
-                    title: "Card 1",
-                    description: "Description ....",
-                },
-                {
-                    title: "Card 2",
-                    description: "Description 2 ....",
-                },
-            ],
-        }
-    }
+    const cards = useSelector(state => state.cards);
 
-    renderCards = () => {
-        return this.state.cardItems.map((card, index) => {
+    const renderCards = () => {
+        return cards.map((card, index) => {
             return <Card key={index} title={card.title} description={card.description} />
         });
     }
 
-    render = () =>
+    return (
         <Layout>
-            {this.renderCards()}
+            <ScrollView>
+            {renderCards()}
+            </ScrollView>
         </Layout>
+    )
 }
 
 export default HomeScreen
