@@ -4,16 +4,22 @@ import {
     Text,
     StyleSheet
 } from 'react-native';
+import {withNavigation} from 'react-navigation';
 import Button from './Button';
 import ButtonOutlined from './ButtonOutlined';
 
 class Card extends React.Component {
 
-    cards = [
-        {
-            title: "Card 1",
-        }
-    ];
+    constructor(props) {
+        super(props);
+        this.openDetails = this.openDetails.bind(this);
+    }
+
+    openDetails() {
+        this.props.navigation.navigate('CountryDetail', {
+            alpha2Code: this.props.alpha2Code
+        });
+    }
 
     render = () =>
         <View style={styles.card}>
@@ -24,7 +30,7 @@ class Card extends React.Component {
                 {this.props.description}
             </Text>
             <View style={styles.cardFooter}>
-                <Button title="View Details"></Button>
+                <Button onPress={this.openDetails} title="View Details"></Button>
                 <ButtonOutlined title="Delete Card"></ButtonOutlined>
             </View>
         </View>
@@ -53,4 +59,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Card
+export default withNavigation(Card)

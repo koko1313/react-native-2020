@@ -4,9 +4,9 @@ import {
     ActivityIndicator,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import axios from 'axios';
 import {setCountries} from '../redux/actions/counties';
 import {setLoading} from '../redux/actions/loading';
+import API from '../remote';
 
 import Layout from '../layout/Layout';
 import Card from '../components/Card';
@@ -19,13 +19,13 @@ const HomeScreen = () => {
 
     getCountries = async () => {
         dispatch(setLoading(true));
-        const response = await axios
-            .get("https://restcountries.eu/rest/v2/all")
+        const response = await API.get("all")
             .then(response => {
                 const newCountries = response.data.splice(0, 20).map(item=>{
                     return {
                         title: item.name,
                         description: item.description,
+                        alpha2Code: item.alpha2Code,
                     }
                 });
                 dispatch(setCountries(newCountries));
@@ -33,6 +33,9 @@ const HomeScreen = () => {
             .catch(error => {
 
             });
+        setTimeout(() =>{
+            dispatch(setLoading(false));
+        },1000);
     }
 
     useEffect(() => {
@@ -40,7 +43,7 @@ const HomeScreen = () => {
     }, []);
 
     const renderCard = ({item: card}) => {
-        return <Card title={card.title} description={card.description} />
+        return <Card title={card.title} description={card.description} alpha2Code={card.alpha2Code} />
     }
 
     return (
