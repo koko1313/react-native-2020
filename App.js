@@ -1,33 +1,12 @@
 import React from 'react';
-import {Platform, StatusBar, StyleSheet, View, SafeAreaView } from 'react-native';
+import {Platform, StatusBar, StyleSheet, View } from 'react-native';
 import {AppLoading} from 'expo';
-import * as Font from 'expo-font';
+// import * as Font from 'expo-font';
 import {Asset} from 'expo-asset';
 import AppContainer from './navigation/AppContainer';
-import { combineReducers, createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import {Provider} from 'react-redux';
-
-const initialState = [
-    {
-        title: "Card 1",
-        description: "Description ....",
-    },
-    {
-        title: "Card 2",
-        description: "Description 2 ....",
-    },
-];
-
-const cardReducer = function(state = initialState, action) {
-    switch(action.type) {
-        case "SET_CARDS": return [...action.payload];
-        default: return state;
-    }
-}
-
-const rootReducer = combineReducers({
-    cards: cardReducer,
-});
+import rootReducer from './redux/reducers';
 
 // когато dispatch-нем нещо, то минава първо през middleware-а и после продължава към reducer-а
 const store = createStore(rootReducer, applyMiddleware(/*thunk*/));

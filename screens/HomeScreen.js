@@ -4,35 +4,36 @@ import {
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import axios from 'axios';
+import {setCountries} from '../redux/actions/counties';
 
 import Layout from '../layout/Layout';
 import Card from '../components/Card';
 
 const HomeScreen = () => {
 
-    const cards = useSelector(state => state.cards);
+    const countries = useSelector(state => state.countries);
 
     const dispatch = useDispatch();
+
+    getCountries = async () => {
+        
+    }
 
     useEffect(() => {
         axios
             .get("https://restcountries.eu/rest/v2/all")
             .then(response => {
-                const newCards = response.data.splice(0, 20).map(item=>{
+                const newCountries = response.data.splice(0, 20).map(item=>{
                     return {
                         title: item.name,
                         description: item.description,
                     }
                 });
-                dispatch({
-                    type: 'SET_CARDS',
-                    payload: newCards,
-                });
+                dispatch(setCountries(newCountries));
             })
             .catch(error => {
 
             });
-            
     }, []);
 
     const renderCard = ({item: card}) => {
@@ -42,7 +43,7 @@ const HomeScreen = () => {
     return (
         <Layout>
             <FlatList 
-                data={cards}
+                data={countries}
                 renderItem={renderCard}
                 keyExtractor={({_, index})=>'card'+index}
             />
