@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Text, TextInput, StyleSheet} from 'react-native';
+import {Text, TextInput, StyleSheet, View, ScrollView} from 'react-native';
 import Layout from '../layout/Layout';
 import { useSelector, useDispatch } from 'react-redux';
 import Colors from '../constants/Colors';
@@ -27,30 +27,34 @@ const InfoScreen = () => {
 
     return (
         <Layout>
-            <Text>Enter card details</Text>
-
-            <Text>Card title</Text>
-            <TextInput 
-                value={title} 
-                onChangeText={text => setTitle(text)} // text => setTitle(text) - деклариране на функция на един ред
-                style={styles.input}
-            />
-
-            <Text>Card description</Text>
-            <TextInput 
-                value={description} 
-                onChangeText={text => setDescription(text)} 
-                style={[styles.input, styles.textArea]}
-                multiline={true}
-                numberOfLines={5}
-            />
-
-            <Button onPress={addNewCardItem} title="Add card"></Button>
+            <ScrollView>
+                <View style={styles.infoContainer}>
+                    <Text>Enter card title:</Text>
+                    <TextInput
+                        value={title}
+                        onChangeText={text=>setTitle(text)}
+                        style={styles.input}
+                    />
+                    <Text>Enter card description:</Text>
+                    <TextInput
+                        value={description}
+                        numberOfLines={5}
+                        multiline={true}
+                        onChangeText={text=>setDescription(text)}
+                        style={[styles.input, styles.textArea]}
+                    />
+                    <Button onPress={addNewCardItem} title="Add card" />
+                </View>
+            </ScrollView>
         </Layout>
     );
 }
 
 const styles = StyleSheet.create({
+    infoContainer: {
+        padding: 15,
+        backgroundColor: "#ffffff",
+    },
     input: {
         borderColor: Colors.borderLight,
         borderWidth: 3,
