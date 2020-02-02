@@ -31,7 +31,7 @@ class Card extends React.Component {
             </Text>
             <View style={styles.cardFooter}>
                 <Button onPress={this.openDetails} title="View Details"></Button>
-                <ButtonOutlined title="Delete Card"></ButtonOutlined>
+                <ButtonOutlined onPress={this.props.onDeletePressed} title="Delete Card"></ButtonOutlined>
             </View>
         </View>
 }

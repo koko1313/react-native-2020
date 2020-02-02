@@ -1,35 +1,43 @@
 import React, {useState} from 'react';
-import {Text, TextInput, StyleSheet, View, ScrollView} from 'react-native';
+import {Text, TextInput, StyleSheet, View, Picker, ScrollView} from 'react-native';
 import Layout from '../layout/Layout';
 import { useSelector, useDispatch } from 'react-redux';
 import Colors from '../constants/Colors';
 import Button from '../components/Button';
+import { setCountries } from '../redux/actions/counties';
 
 const InfoScreen = () => {
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [direction, setDirection] = useState('append');
 
-    const cards = useSelector(state => state.cards);
+    const countries = useSelector(state => state.countries);
     const dispatch = useDispatch();
 
-    const addNewCardItem = () => {
-        console.log(cards);
+    const addNewCountryItem = () => {
+        const newItem = {
+            title,
+            description,
+            alpha2Code: 'bg',
+        };
 
-        dispatch({
-            type: 'SET_CARDS',
-            payload: [...cards, {
-                title: title,
-                description: description,
-            }],
-        })
+        const newCountries = 
+            direction === 'append' 
+                ? [...countries, newItem] 
+                : [newItem, ...countries];
+        
+        setTitle('');
+        setDescription('');
+            
+        dispatch(setCountries(newCountries));
     }
 
     return (
         <Layout>
             <ScrollView>
                 <View style={styles.infoContainer}>
-                    <Text>Enter card title:</Text>
+                    <Text>Enter country title:</Text>
                     <TextInput
                         value={title}
                         onChangeText={text=>setTitle(text)}
@@ -43,7 +51,11 @@ const InfoScreen = () => {
                         onChangeText={text=>setDescription(text)}
                         style={[styles.input, styles.textArea]}
                     />
-                    <Button onPress={addNewCardItem} title="Add card" />
+                    <Picker selectedValue={direction} onValueChange={value => setDirection(value)} style={styles.picker}>
+                        <Picker.Item label="Prepend" value="prepend" />
+                        <Picker.Item label="Append" value="append" />
+                    </Picker>
+                    <Button onPress={addNewCountryItem} title="Add card" />
                 </View>
             </ScrollView>
         </Layout>
@@ -66,6 +78,10 @@ const styles = StyleSheet.create({
         height: 150,
         textAlignVertical: 'top',
         paddingVertical: 10, 
+    },
+    picker: {
+        borderColor: '#333',
+        borderWidth: 1
     }
 });
 
